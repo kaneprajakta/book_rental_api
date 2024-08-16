@@ -14,7 +14,7 @@ use DB;
 class BookController extends Controller
 {
     public function index(){
-        
+        echo csrf_token();
         $books = Book::all();
         return response()->json($books); 
         
@@ -28,9 +28,13 @@ class BookController extends Controller
 
     public function import() 
     {
-        echo "here";exit;
+        
         Excel::import(new BooksImport, ""); //D:\wamp64\apps\book_rental_api\app\Imports\Books.xlsx
         return redirect('/')->with('success', 'All good!');
         
+    }
+
+    public function get_csrf_token(){
+        return response()->json(csrf_token());
     }
 }
